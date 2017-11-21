@@ -25,11 +25,11 @@ const Balances = ({ adtBalance, ethBalance }) => {
     <div>
       <div style={styles.balances}>
         <div style={styles.adt}>
-          <div>{'Your Rinkeby ADT balance:'}</div>
+          <div>{'Your TRKY balance:'}</div>
           <div>{adtBalance}</div>
         </div>
         <div style={styles.eth}>
-          <div>{'Your Rinkeby ETH balance:'}</div>
+          <div>{'Your ETH balance:'}</div>
           <div>{ethBalance}</div>
         </div>
       </div>
