@@ -1,5 +1,4 @@
 import React from 'react';
-import AdTokenPrice from './AdTokenPrice';
 
 const styles = {
   button: {

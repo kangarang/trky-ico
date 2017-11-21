@@ -9,7 +9,6 @@ import 'whatwg-fetch';
 import Heading from './components/Heading';
 import Dialog from './components/Dialog';
 import Instructions from './components/Instructions';
-import NoEther from './components/NoEther';
 import Balances from './components/Balances';
 import PurchaseAdt from './components/PurchaseAdt';
 import TxHash from './components/TxHash';
@@ -36,18 +35,10 @@ const styles = {
   },
   FlexItem: {
     padding: '2em 2em 0',
-    // padding: '1em',
-    // margin: '2em',
   },
   track: {
     padding: '.25em 1em',
   }
-
-  // container: {
-  //   margin: '2em',
-  //   color: '#4585c7',
-  //   fontSize: '1.3em'
-  // }
 }
 class App extends Component {
   constructor() {
@@ -195,12 +186,9 @@ class App extends Component {
           <h1>{'Welcome to the TurkeyCoin ICO!'}</h1>
         </div>
         <div style={styles.FlexContainer}>
-          {/* <div style={styles.FlexItem}> */}
           <Heading />
-          {/* </div> */}
 
           <div style={styles.FlexItem}>
-            {/* <h1>{'Welcome to the TurkeyCoin ICO!'}</h1> */}
             <iframe width="560" height="315" src="https://www.youtube.com/embed/cZFAWi1N6zc" title='March of the turkeys' frameBorder="0" allowFullScreen></iframe>
           </div>
         </div>
