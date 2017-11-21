@@ -1,34 +1,48 @@
 import React from 'react';
-import pope from '../assets/tokenpope.png';
+import turkeySVG from '../assets/turkey.svg';
+import thankYou from '../assets/speech-bubble.png';
 
 const styles = {
   imgStyle: {
-    maxWidth: '400px'
+    maxWidth: '35px'
   },
   container: {
-    margin: '2em',
+    padding: '2em 2em 0',
     color: '#d37a15',
-    fontSize: '1.3em'
+    fontSize: '1.3em',
   }
 };
+
+const icons = {
+  heart: <i className="fa fa-heart" aria-hidden="true" />,
+  turk: <img style={styles.imgStyle} src={turkeySVG} />,
+  thankYou: <img style={styles.imgStyle} src={thankYou} />
+}
 
 const Heading = () => {
   return (
     <div style={styles.container}>
-      <img src={pope} alt="turkey logo" style={styles.imgStyle} />
 
-      <h2>{'Welcome to the TurkeyCoin ICO!'}</h2>
+      <div>
+        {icons.turk}<strong>{` TurkeyCoin (TRKY) `}</strong>{` is EXTREMELY EXCLUSIVE. There are only 1000 of these VERY RARE coins!!!`}
+      </div>
 
-      <div>{"TurkeyCoin (TRKY) is EXTREMELY EXCLUSIVE. There are only 1000 of these VERY RARE coins!!! What does TurkeyCoin get you? Love of family and a full heart. Now that's what I call utility!"}</div>
+      <div>
+        {`What does TurkeyCoin get you? Love of family and a full `}
+        {icons.heart}{` heart `}{icons.heart}
+        {` Now that's what I call utility!`}
+      </div>
 
       <div>{'All proceeds from the TurkeyCoin ICO will be donated to '}
         <a target='_blank' href='https://www.bowery.org/' rel='noopener noreferrer'>
-          {'The Bowery Mission'}
+          {'The Bowery Mission.'}
         </a>
-        {'. The Bowery Mission serves homeless, hungry and poor New Yorkers. '}
+        {icons.thankYou}
       </div>
 
-      <div>{'Make sure to GOBBLE up this incredible buying opportunity!!!!!'}</div>
+      <div>
+        {'The Bowery Mission serves homeless, hungry and poor New Yorkers. Make sure to GOBBLE up this incredible buying opportunity!!!!!'}
+      </div>
     </div>
   );
 };

@@ -2,19 +2,17 @@ import React from 'react';
 
 const styles = {
   balances: {
-    padding: '1em',
     display: 'flex',
-    justifyContent: 'center'
   },
   adt: {
-    border: '2px solid #4585c7',
-    margin: '1em',
+    border: '2px solid #d37a15',
+    margin: '.3em',
     marginTop: 0,
     padding: '.3em'
   },
   eth: {
     border: '2px solid #3C3C3D',
-    margin: '1em',
+    margin: '.3em',
     marginTop: 0,
     padding: '.3em'
   }

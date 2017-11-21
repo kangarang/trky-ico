@@ -19,7 +19,6 @@ const styles = {
 const PurchaseAdt = ({ handleSubmit, handleChange, amount }) => {
   return (
     <div style={styles.container}>
-      <AdTokenPrice />
 
       <form onSubmit={handleSubmit}>
         <input value={amount} onChange={handleChange} />

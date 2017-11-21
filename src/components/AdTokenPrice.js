@@ -1,7 +1,8 @@
 import React from 'react';
 
 const style = {
-  marginBottom: '2em'
+  color: '#d37a15',
+  padding: '.25em 1em',
 }
 
 const AdTokenPrice = () => {

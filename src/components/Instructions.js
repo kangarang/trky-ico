@@ -1,7 +1,7 @@
 import React from 'react';
 
 const dialogStyle = {
-  margin: '2em',
+  padding: '.25em 1em',
   color: '#d37a15',
   fontWeight: 'bold'
 };

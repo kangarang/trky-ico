@@ -15,13 +15,34 @@ import PurchaseAdt from './components/PurchaseAdt';
 import TxHash from './components/TxHash';
 import ICO from './assets/Sale.json';
 import HumanStandardToken from './assets/HumanStandardToken.json';
+import AdTokenPrice from './components/AdTokenPrice';
 
+import pope from './assets/tokenpope.png';
 import turkey from './assets/maxresdefault.jpg';
 
 const styles = {
-  imgStyle: {
-    maxWidth: '400px'
+  welcome: {
+    color: '#d37a15',
+    paddingTop: '1em',
   },
+  imgStyle: {
+    maxWidth: '350px'
+  },
+  FlexContainer: {
+    display: 'flex',
+    textAlign: 'left',
+    padding: '1em 2em 0',
+    margin: '1em 2em 0',
+  },
+  FlexItem: {
+    padding: '2em 2em 0',
+    // padding: '1em',
+    // margin: '2em',
+  },
+  track: {
+    padding: '.25em 1em',
+  }
+
   // container: {
   //   margin: '2em',
   //   color: '#4585c7',
@@ -170,52 +191,82 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Heading />
+        <div style={styles.welcome}>
+          <h1>{'Welcome to the TurkeyCoin ICO!'}</h1>
+        </div>
+        <div style={styles.FlexContainer}>
+          {/* <div style={styles.FlexItem}> */}
+          <Heading />
+          {/* </div> */}
 
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/cZFAWi1N6zc" title='March of the turkeys' frameBorder="0" allowFullScreen></iframe>
+          <div style={styles.FlexItem}>
+            {/* <h1>{'Welcome to the TurkeyCoin ICO!'}</h1> */}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/cZFAWi1N6zc" title='March of the turkeys' frameBorder="0" allowFullScreen></iframe>
+          </div>
+        </div>
+
+        <div style={styles.FlexContainer}>
+          <div style={styles.FlexItem}>
+            <Instructions
+              message={"To purchase TurkeyCoin using MetaMask, first make sure you're on the Ethereum Main Network."}
+              subMessage={'Then input the amount of Ether you would like to send, and fire away!'}
+            />
+
+            <AdTokenPrice />
+
+            <img src={pope} alt="turkey logo" style={styles.imgStyle} />
+
+            <div style={styles.track}>
+              <a href="https://etherscan.io/token/0x688f95e3416b3960a2bbcc1d25a2c17aff9aefc6" target="_blank" rel="noopener noreferrer">
+                {'You can track TurkeyCoin here'}
+              </a>
+              {' and '}
+              <a href="https://etherscan.io/address/0xA21b90a53ccaBC16817583fE7F568f9b951a8d54" target="_blank" rel="noopener noreferrer">
+                {'watch the wallet here'}
+              </a>
+            </div>
+          </div>
+          <div style={styles.FlexItem}>
+            <Dialog
+              message={this.state.message}
+              subMessage={this.state.subMessage}
+            />
+
+            {this.state.subMessage && (
+              <div>
+                <Balances
+                  adtBalance={this.state.adtBalance}
+                  ethBalance={this.state.ethBalance}
+                />
+
+                <PurchaseAdt
+                  handleChange={this.handleChange}
+                  handleSubmit={this.handleSubmit}
+                  amount={this.state.amount}
+                />
+
+                {this.state.txHash && <TxHash txHash={this.state.txHash} />}
+                <img src={turkey} alt="turkey logo" style={styles.imgStyle} />
+              </div>
+            )}
+          </div>
+        </div>
+
+
         <iframe width="560" height="315" src="https://www.youtube.com/embed/jWwVaUiva_I" title='Gobbling Wild Turkeys Scare Off Rooster' frameBorder="0" allowFullScreen></iframe>
 
-        <Instructions
-          message={"To purchase TurkeyCoin using MetaMask, first make sure you're on the mainnet"}
-          subMessage={'Then input the amount of Ether you would like to send below, and fire away!'}
-        />
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
 
-        <Dialog
-          message={this.state.message}
-          subMessage={this.state.subMessage}
-        />
-
-        {this.state.subMessage && (
-          <PurchaseAdt
-            handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit}
-            amount={this.state.amount}
-          />
-        )}
-
-        {this.state.subMessage && (
-          <Balances
-            adtBalance={this.state.adtBalance}
-            ethBalance={this.state.ethBalance}
-          />
-        )}
-
-      <img src={turkey} alt="turkey logo" style={styles.imgStyle} />
-
-        {this.state.ethBalance === '0' && <NoEther />}
-
-        {this.state.txHash && <TxHash txHash={this.state.txHash} />}
-
-      <div>
-        <a href="https://etherscan.io/token/0x688f95e3416b3960a2bbcc1d25a2c17aff9aefc6" target="_blank" rel="noopener noreferrer">
-          {'You can track TurkeyCoin here'}
-        </a>
-        {' and '}
-        <a href="https://etherscan.io/address/0xA21b90a53ccaBC16817583fE7F568f9b951a8d54" target="_blank" rel="noopener noreferrer">
-          {'watch the wallet here'}
-        </a>
-      </div>
-
+        <div>Icons made by <a href="https://www.flaticon.com/authors/twitter" title="Twitter">Twitter</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
       </div>
     );
   }
