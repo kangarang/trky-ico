@@ -11,7 +11,7 @@ const txHashStyle = {
   padding: '1em'
 }
 
-const thankYouIcon = <img style={styles.imgStyle} src={thankYou} />
+const thankYouIcon = <img style={styles.imgStyle} src={thankYou} alt='thank you png' />
 
 const TxHash = ({ txHash, networkMessage }) => (
   <div style={txHashStyle}>
