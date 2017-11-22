@@ -245,7 +245,7 @@ class App extends Component {
                   amount={this.state.amount}
                 />
 
-                {this.state.txHash && <TxHash txHash={this.state.txHash} />}
+                {this.state.txHash && <TxHash txHash={this.state.txHash} networkMessage={this.state.networkMessage} />}
                 <img src={turkey} alt="turkey logo" style={styles.imgStyle} />
               </div>
             )}

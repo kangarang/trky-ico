@@ -13,17 +13,31 @@ const txHashStyle = {
 
 const thankYouIcon = <img style={styles.imgStyle} src={thankYou} />
 
-const TxHash = ({ txHash }) => (
+const TxHash = ({ txHash, networkMessage }) => (
   <div style={txHashStyle}>
     <div>Your transaction {thankYouIcon}</div>
-      
-    <a
-      rel="noopener noreferrer"
-      target="_blank"
-      href={`https://rinkeby.etherscan.io/tx/${txHash}`}
-    >
-      {txHash}
-    </a>
+
+    {
+      networkMessage ?
+        (
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href={`https://rinkeby.etherscan.io/tx/${txHash}`}
+          >
+            {txHash}
+          </a>
+        )
+        : (
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href={`https://etherscan.io/tx/${txHash}`}
+          >
+            {txHash}
+          </a>
+        )
+    }
   </div>
 );
 
