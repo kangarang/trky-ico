@@ -10,11 +10,11 @@ import Heading from './components/Heading';
 import Dialog from './components/Dialog';
 import Instructions from './components/Instructions';
 import Balances from './components/Balances';
-import PurchaseAdt from './components/PurchaseAdt';
+import PurchaseTrky from './components/PurchaseTrky';
 import TxHash from './components/TxHash';
 import ICO from './assets/Sale.json';
 import HumanStandardToken from './assets/HumanStandardToken.json';
-import AdTokenPrice from './components/AdTokenPrice';
+import TurkeyCoinPrice from './components/TurkeyCoinPrice';
 
 import pope from './assets/tokenpope.png';
 import turkey from './assets/maxresdefault.jpg';
@@ -46,7 +46,7 @@ class App extends Component {
     this.state = {
       amount: 1,
       ethBalance: '-',
-      adtBalance: '-',
+      trkyBalance: '-',
       txHash: '',
       message: 'Please unlock MetaMask and connect to the Ethereum Main Network',
       subMessage: '',
@@ -139,7 +139,7 @@ class App extends Component {
 
     const adtDisplayValue = rawBal.div(new BN('10', 10).pow(new BN('18', 10)));
 
-    const adtBalance = this.trimDecimals(adtDisplayValue);
+    const trkyBalance = this.trimDecimals(adtDisplayValue);
 
     this.web3.eth.getBalance(account, (err, res) => {
       const ethDisplayValue = res.div(new BN('10', 10).pow(new BN('18', 10)));
@@ -158,7 +158,7 @@ class App extends Component {
         message: message,
         subMessage: account,
         networkMessage: networkMessage,
-        adtBalance: adtBalance.toString(10),
+        trkyBalance: trkyBalance.toString(10),
         ethBalance: ethBalance.toString(10)
       });
     });
@@ -211,7 +211,7 @@ class App extends Component {
               subMessage={'Then input the amount of Ether you would like to send, and fire away!'}
             />
 
-            <AdTokenPrice />
+            <TurkeyCoinPrice />
 
             <img src={pope} alt="turkey logo" style={styles.imgStyle} />
 
@@ -235,11 +235,11 @@ class App extends Component {
             {this.state.subMessage && (
               <div>
                 <Balances
-                  adtBalance={this.state.adtBalance}
+                  trkyBalance={this.state.trkyBalance}
                   ethBalance={this.state.ethBalance}
                 />
 
-                <PurchaseAdt
+                <PurchaseTrky
                   handleChange={this.handleChange}
                   handleSubmit={this.handleSubmit}
                   amount={this.state.amount}

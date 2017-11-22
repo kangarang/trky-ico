@@ -4,7 +4,7 @@ const styles = {
   balances: {
     display: 'flex',
   },
-  adt: {
+  trky: {
     border: '2px solid #d37a15',
     margin: '.3em',
     marginTop: 0,
@@ -18,13 +18,13 @@ const styles = {
   }
 };
 
-const Balances = ({ adtBalance, ethBalance }) => {
+const Balances = ({ trkyBalance, ethBalance }) => {
   return (
     <div>
       <div style={styles.balances}>
-        <div style={styles.adt}>
+        <div style={styles.trky}>
           <div>{'Your TRKY balance:'}</div>
-          <div>{adtBalance}</div>
+          <div>{trkyBalance}</div>
         </div>
         <div style={styles.eth}>
           <div>{'Your ETH balance:'}</div>

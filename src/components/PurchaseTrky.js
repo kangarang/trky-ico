@@ -15,7 +15,7 @@ const styles = {
   }
 }
 
-const PurchaseAdt = ({ handleSubmit, handleChange, amount }) => {
+const PurchaseTrky = ({ handleSubmit, handleChange, amount }) => {
   return (
     <div style={styles.container}>
 
@@ -25,9 +25,8 @@ const PurchaseAdt = ({ handleSubmit, handleChange, amount }) => {
           {'Buy TRKY with ETH'}
         </button>
       </form>
-
     </div>
   );
 };
 
-export default PurchaseAdt;
+export default PurchaseTrky;

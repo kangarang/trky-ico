@@ -5,7 +5,7 @@ const style = {
   padding: '.25em 1em',
 }
 
-const AdTokenPrice = () => {
+const TurkeyCoinPrice = () => {
   return (
     <div style={style}>
       <div>
@@ -18,4 +18,4 @@ const AdTokenPrice = () => {
   );
 };
 
-export default AdTokenPrice;
+export default TurkeyCoinPrice;

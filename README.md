@@ -1,4 +1,4 @@
-# AdToken Faucet
+# TurkeyCoin ICO
 
 Install local packages
 
