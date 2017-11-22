@@ -15,7 +15,7 @@ app.use(function(req, res, next) {
 app.use(express.static(__dirname + "/build"));
 
 /* config for browser history in react */
-app.get("*", (req, res) => res.sendFile(path.resolve(__dirname, "index.html"))); // What does this do?
+app.get("*", (req, res) => res.sendFile(path.resolve(__dirname + "/build", "index.html")));
 
 const server = app.listen(process.env.PORT || 3000, () => {
   const port = server.address().port;
