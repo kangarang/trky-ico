@@ -6,10 +6,16 @@ const dialogStyle = {
   fontWeight: 'bold'
 };
 
-const Dialog = ({ message, subMessage }) => {
+const networkMessageStyle = {
+  color: 'red'
+}
+
+const Dialog = ({ message, subMessage, networkMessage }) => {
   return (
     <div style={dialogStyle}>
-      <div>{message} {subMessage}</div>
+      {networkMessage && <div style={networkMessageStyle}>{networkMessage}</div>}
+      <div>{message}</div>
+      <div>{subMessage}</div>
     </div>
   );
 };

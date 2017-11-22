@@ -49,7 +49,8 @@ class App extends Component {
       adtBalance: '-',
       txHash: '',
       message: 'Please unlock MetaMask and connect to the Ethereum Main Network',
-      subMessage: ''
+      subMessage: '',
+      networkMessage: '',
     };
   }
 
@@ -144,9 +145,19 @@ class App extends Component {
       const ethDisplayValue = res.div(new BN('10', 10).pow(new BN('18', 10)));
       const ethBalance = this.trimDecimals(ethDisplayValue);
 
+
+      let networkMessage = '';
+      let message = 'Your MetaMask Address:'
+
+      if (this.web3.version.network === '4') {
+        networkMessage = 'You are connected to the Rinkeby Test Network. Switch to the Ethereum Main Network for the real deal!';
+        message = 'Your RINKEBY MetaMask Address:'
+      }
+
       this.setState({
-        message: 'Your MetaMask address:',
+        message: message,
         subMessage: account,
+        networkMessage: networkMessage,
         adtBalance: adtBalance.toString(10),
         ethBalance: ethBalance.toString(10)
       });
@@ -218,6 +229,7 @@ class App extends Component {
             <Dialog
               message={this.state.message}
               subMessage={this.state.subMessage}
+              networkMessage={this.state.networkMessage}
             />
 
             {this.state.subMessage && (
