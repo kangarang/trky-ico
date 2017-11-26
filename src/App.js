@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
 import Web3 from 'web3';
 import contract from 'truffle-contract';
 import unit from 'ethjs-unit';
 import BN from 'bn.js';
 import 'whatwg-fetch';
 
+import './App.css';
 import Heading from './components/Heading';
 import Dialog from './components/Dialog';
 import Instructions from './components/Instructions';
@@ -46,6 +46,7 @@ const styles = {
 class App extends Component {
   constructor() {
     super();
+    this.intervalID = '';
     this.state = {
       amount: 1,
       ethBalance: '-',
@@ -54,28 +55,44 @@ class App extends Component {
       message: 'Please unlock MetaMask and connect to the Ethereum Main Network',
       subMessage: '',
       networkMessage: '',
+      account: '',
     };
   }
 
   componentDidMount() {
-    window.setTimeout(() => {
-      if (typeof this.web3 !== 'undefined') {
-        this.web3 = new Web3(this.web3.currentProvider);
-      } else if (typeof window.web3 !== 'undefined') {
-        this.web3 = new Web3(window.web3.currentProvider);
-      } else {
-        throw new Error('You need MetaMask!');
-      }
+    this.intervalID = window.setInterval(
+      () => this.getProvider(),
+      300
+    );
+  }
 
-      this.web3.eth.defaultAccount = this.web3.eth.accounts[0];
-      if (this.web3.eth.defaultAccount) {
-        this.setupBalances();
-      } else if (this.web3.eth.defaultAccount === undefined) {
-        this.setState({
-          message: 'Please unlock MetaMask and connect to the Ethereum Main Network'
-        });
-      }
-    }, 900);
+  componentWillUnmount() {
+    window.clearInterval(this.intervalID);
+  }
+
+  getProvider = () => {
+    if (typeof window.web3 !== 'undefined' && typeof window.web3.currentProvider !== 'undefined') {
+      window.web3.eth.getAccounts((err, accounts) => {
+        if (err) {
+          throw new Error(err);
+        }
+        if (accounts.length) {
+          this.web3 = new Web3(window.web3.currentProvider);
+          this.web3.eth.defaultAccount = accounts[0];
+
+          this.setState({
+            account: accounts[0]
+          })
+
+          this.setupBalances();
+          window.clearInterval(this.intervalID);
+        }
+      })
+    } else {
+      this.setState({
+        message: 'Please unlock MetaMask and connect to the Ethereum Main Network'
+      });
+    }
   }
 
   getSale = async () => {
@@ -92,8 +109,8 @@ class App extends Component {
     // const Sale = contract(await saleArtifact.json());
     const Sale = contract(ICO);
 
-    Sale.setProvider(this.web3.currentProvider);
-    Sale.defaults({ from: this.web3.eth.defaultAccount })
+    Sale.setProvider(window.web3.currentProvider);
+    Sale.defaults({ from: this.state.account })
 
     try {
       await Sale.deployed();
@@ -119,8 +136,8 @@ class App extends Component {
     // const tokenArtifact = await fetch(tokenUrl);
     // const Token = contract(await tokenArtifact.json());
     const Token = contract(HumanStandardToken)
-    Token.setProvider(this.web3.currentProvider);
-    Token.defaults({ from: this.web3.eth.defaultAccount });
+    Token.setProvider(window.web3.currentProvider);
+    Token.defaults({ from: this.state.account });
 
     return Token.at(tokenAddress);
   };
@@ -137,32 +154,33 @@ class App extends Component {
       return false;
     }
 
-    const account = this.web3.eth.accounts[0];
-    const rawBal = await token.balanceOf.call(account);
-
-    const adtDisplayValue = rawBal.div(new BN('10', 10).pow(new BN('18', 10)));
-
+    const rawTokenBal = await token.balanceOf.call(this.state.account);
+    const adtDisplayValue = rawTokenBal.div(new BN('10', 10).pow(new BN('18', 10)));
     const trkyBalance = this.trimDecimals(adtDisplayValue);
 
-    this.web3.eth.getBalance(account, (err, res) => {
+    this.web3.eth.getBalance(this.state.account, (err, res) => {
       const ethDisplayValue = res.div(new BN('10', 10).pow(new BN('18', 10)));
       const ethBalance = this.trimDecimals(ethDisplayValue);
 
+      this.web3.version.getNetwork((err, networkID) => {
+        let networkMessage;
+        let message = 'Your MetaMask Address:'
 
-      let networkMessage = '';
-      let message = 'Your MetaMask Address:'
+        if (networkID === '4') {
+          networkMessage = 'You are connected to the Rinkeby Test Network. Switch to the Ethereum Main Network for the real deal!';
+          message = 'Your RINKEBY MetaMask Address:'
+        } else if (networkID === '1') {
+          networkMessage = '';
+          message = 'Your MetaMask Address';
+        }
 
-      if (this.web3.version.network === '4') {
-        networkMessage = 'You are connected to the Rinkeby Test Network. Switch to the Ethereum Main Network for the real deal!';
-        message = 'Your RINKEBY MetaMask Address:'
-      }
-
-      this.setState({
-        message: message,
-        subMessage: account,
-        networkMessage: networkMessage,
-        trkyBalance: trkyBalance.toString(10),
-        ethBalance: ethBalance.toString(10)
+        this.setState({
+          message: message,
+          subMessage: this.state.account,
+          networkMessage: networkMessage,
+          trkyBalance: trkyBalance.toString(10),
+          ethBalance: ethBalance.toString(10),
+        });
       });
     });
   };
@@ -176,16 +194,12 @@ class App extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     const saleInstance = await this.getSale();
-
-    console.log('saleInstance', saleInstance);
-
     const weiValue = unit.toWei(this.state.amount, 'ether');
 
     const txn = {
-      from: this.state.subMessage,
+      from: this.state.account,
       value: weiValue
     }
-
     const txHash = await saleInstance.purchaseTokens.sendTransaction(txn);
 
     this.setState({
@@ -199,6 +213,7 @@ class App extends Component {
         <div style={styles.welcome}>
           <h1>{'Welcome to the TurkeyCoin ICO!'}</h1>
         </div>
+
         <div style={styles.FlexContainer}>
           <Heading />
 
@@ -228,6 +243,7 @@ class App extends Component {
               </a>
             </div>
           </div>
+
           <div style={styles.FlexItem}>
             <Dialog
               message={this.state.message}

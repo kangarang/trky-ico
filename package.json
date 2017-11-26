@@ -10,6 +10,7 @@
     "react-dom": "15.6.1",
     "react-scripts": "1.0.13",
     "truffle-contract": "2.0.5",
+    "web3": "^0.20.2",
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
